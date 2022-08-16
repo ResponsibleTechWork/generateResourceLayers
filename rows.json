@@ -1,0 +1,82 @@
+{
+  "accessibility": [
+    { 
+      "x": 3,
+      "y": 22,
+      "type": "below" 
+    },
+    { 
+      "x": 3,
+      "y": 25,
+      "type": "above" 
+    }
+  ],
+  "bias": [
+    { 
+      "x": 44,
+      "y": 22,
+      "type": "below" 
+    },
+    { 
+      "x": 44,
+      "y": 25,
+      "type": "above" 
+    }
+  ],
+  "diversity": [
+    { 
+      "x": 24,
+      "y": 34,
+      "type": "below" 
+    },
+    {
+      "x": 24,
+      "y": 37,
+      "type": "above"
+    }
+  ],
+  "ethics": [
+    { 
+      "x": 3,
+      "y": 13,
+      "type": "below" 
+    },
+    { 
+      "x": 3,
+      "y": 16,
+      "type": "above" 
+    },
+    { 
+      "x": 3,
+      "y": 17,
+      "type": "below" 
+    },
+    { 
+      "x": 3,
+      "y": 20,
+      "type": "above" 
+    }
+  ], 
+  "sustainability": [
+    { 
+      "x": 44,
+      "y": 13,
+      "type": "below" 
+    },
+    { 
+      "x": 44,
+      "y": 16,
+      "type": "above" 
+    },
+    { 
+      "x": 44,
+      "y": 17,
+      "type": "below" 
+    },
+    { 
+      "x": 44,
+      "y": 20,
+      "type": "above" 
+    }
+  ]
+}
