@@ -4,9 +4,11 @@ const rows = require('./rows.json');
 
 // Map properties, don't forget to change if map changes!
 const mapFile = "../RespTechLibrary/library.json";
-const outputMapFile = mapFile; //"../RespTechLibrary/libraryTEST.json"; // Change this when adding new functionality
+const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json";  // Change this when adding new functionality
 const outputObjectLayer = 'resourcesAreas';
 const outputTileLayer = 'resourcesTiles';
+
+let mapData = require(mapFile);
 
 const mapWidth = 62;
 const mapHeight = 40;
@@ -17,7 +19,7 @@ const tileSize = 32;
 const areaWidth = 3;
 const areaHeight = 1;
 
-const tablesRow = 4;
+const tablesRow = 5;
 
 // List of categories to populate; use same name in resources and rows files
 const categories = ["accessibility", "bias", "diversity", "ethics", "sustainability"];
@@ -28,12 +30,29 @@ for (var tile = 0; tile < (mapHeight * mapWidth); tile++) {
     tileLayerData.push(0);
 }
 
-// TODO Be smarter about defining tiles, IDs change!!
 var tileIndex = 0;
-const tileWebsite = 5005;
-const tileTool = 5003;
-const tileBook = 5004;
-const tileOther = 2149;
+
+// Figure out tile gids by looking at a tileResources layer
+// Not sure elegant but does the job for now
+let tileTool = 0;
+let tileBook = 0;
+let tileWebsite = 0;
+let tileOther = 0;
+
+for (let i = 0; i < mapData["layers"].length; i++) {
+    var layerName = mapData["layers"][i].name;
+    
+    if (layerName === "tileResources") {
+        var layerTiles = mapData["layers"][i].data;
+        tileTool = layerTiles[0];
+        tileBook = layerTiles[1];
+        tileWebsite = layerTiles[2];
+        tileOther = layerTiles[3];
+        break;
+    }    
+}
+console.log("Found resource tiles! Their IDs: ");
+console.log(tileTool, tileBook, tileWebsite, tileOther);
 
 // Initializing blank objects array, used to store object areas with URLs
 var objectLayersObjects = [];
@@ -63,10 +82,18 @@ for (let i = 0; i < categories.length; i++) {
 function populateCategory(category, rowStarts, nextX, nextY) {
     for (let i = 0; i < resources[category].length; i++) {
         var resourceName = resources[category][i].name;
+        var resourceDesc = resources[category][i].description;
         var resourceUrl = resources[category][i].url;
         var resourceType = resources[category][i].type;
 
-        console.log('Processing resource: ' + resourceName);
+        var triggerMessage = " ______________________________  Press SPACE to view website";
+        if (resourceDesc) {
+            triggerMessage = resourceName + ": " + resourceDesc + triggerMessage;
+        } else {
+            triggerMessage = resourceName + triggerMessage;
+        }
+
+        // console.log('Processing resource: ' + resourceName);
     
         // Area y coordinates are different depending on area type
         areaX = nextX * tileSize;
@@ -85,6 +112,24 @@ function populateCategory(category, rowStarts, nextX, nextY) {
                     "name":"openWebsite",
                     "type":"string",
                     "value":resourceUrl
+                    },
+                    {
+                        "name": "openWebsiteTrigger",
+                        "propertytype": "",
+                        "type": "string",
+                        "value": "onaction"
+                    },
+                    {
+                        "name": "openWebsiteTriggerMessage",
+                        "propertytype": "",
+                        "type": "string",
+                        "value": triggerMessage
+                    },
+                    {
+                        "name": "openWebsiteWidth",
+                        "propertytype": "",
+                        "type": "string",
+                        "value": "50"
                     }],
             "rotation":0,
             "type":"area",
@@ -127,9 +172,7 @@ function populateCategory(category, rowStarts, nextX, nextY) {
 
 
 
-// Read and update original map data 
-let mapData = require(mapFile);
-
+// Update original map data 
 for (let i = 0; i < mapData["layers"].length; i++) {
     var layerName = mapData["layers"][i].name;
     var layerTiles = mapData["layers"][i].data;
