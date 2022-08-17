@@ -1,9 +1,38 @@
 {
   "accessibility": [
     {
-      "name": "CivicActions Accessibility book recommendations ",
+      "name": "A11Y Project Accessibility Checklist",
+      "url": "https://www.a11yproject.com/checklist/",
+      "type": "tool"
+    },
+    {
+      "name": "CivicActions Accessibility List of Tools ",
+      "url": "https://accessibility.civicactions.com/guide/tools",
+      "type": "tool"
+    },
+    {
+      "name": "Inclusive Design Toolkit by University of Cambridge",
+      "url": "http://www.inclusivedesigntoolkit.com/",
+      "type": "tool"
+    },
+    {
+      "name": "Microsoft Inclusive Design Toolkit",
+      "url": "https://www.microsoft.com/design/inclusive/",
+      "type": "tool"
+    },
+    {
+      "name": "Mobile A11y blog",
+      "url": "https://mobilea11y.com/",
+      "type": "website"
+    },
+    {
+      "name": "WebAIM Introduction to Web Accessibility",
+      "url": "https://webaim.org/intro/",
+      "type": "website"
+    },
+    {
+      "name": "CivicActions Accessibility book recommendations",
       "url": "https://accessibility.civicactions.com/guide/resources#books",
-      "description": "TODO",
       "type": "book"
     }
   ],
@@ -11,45 +40,58 @@
     {
       "name": "Aequitas open source bias audit toolkit",
       "url": "http://www.datasciencepublicpolicy.org/projects/aequitas/",
-      "description": "TODO",
       "type": "tool"
     },
     {
       "name": "AI Blindspot Cards",
       "url": "https://aiblindspot.media.mit.edu/",
-      "description": "TODO",
       "type": "tool"
     },
     {
       "name": "AI Farness 360 toolkit by IBM",
       "url": "http://aif360.mybluemix.net/",
-      "description": "TODO",
       "type": "tool"
     },
     {
       "name": "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence",
       "url": "https://katecrawford.net/",
-      "description": "TODO",
       "type": "book"
+    },
+    {
+      "name": "Weapons of Math Destruction: How big data increases inequality and threatens democracy",
+      "url": "https://weaponsofmathdestructionbook.com",
+      "type": "book"
+    },
+    {
+      "name": "Algorithmic Justic League",
+      "url": "https://www.ajl.org",
+      "description": "is  an organization that combines art and research to illuminate the social implications and harms of artificial intelligence.",
+      "type": "org"
+    },
+    {
+      "name": "Data & Society",
+      "url": "https://datasociety.net",
+      "description": "is an independent nonprofit research organization that studies the social implications of data-centric technologies & automation.",
+      "type": "org"
     }
   ],
   "diversity": [
     {
       "name": "Contributor Covenant",
       "url": "https://www.contributor-covenant.org/",
-      "description": "Contributor Covenant is a code of conduct for open source communities and other digital commons communities.",
+      "description": "a code of conduct for open source communities and other digital commons communities.",
       "type": "tool"
     },
     {
       "name": "The Diversity and Inclusion toolkit by Tech Nation ",
       "url": "https://technation.io/diversity-and-inclusion/",
-      "description": "The Diversity and Inclusion toolkit by Tech Nation offers actionable insights and guidance to help founders build diverse and inclusive companies.",
+      "description": "this toolkit by Tech Nation offers actionable insights and guidance to help founders build diverse and inclusive companies.",
       "type": "tool"
     },
     {
       "name": "W3C Code of Ethics and Professional Conduct ",
       "url": "https://www.w3.org/Consortium/cepc/",
-      "description": "W3C Code of Ethics and Professional Conduct can be used as an example of how to define acceptable and expected behaviors in a positive work environment.",
+      "description": "this code can be used as an example of how to define acceptable and expected behaviors in a positive work environment.",
       "type": "tool"
     },
     {
@@ -61,19 +103,25 @@
     {
       "name": "Black Tech Pipeline",
       "url": "https://blacktechpipeline.com/",
-      "description": "Black Tech Pipeline brings exposure, resources, & opportunities to Black technologists.",
+      "description": "brings exposure, resources, & opportunities to Black technologists.",
       "type": "org"
     },
     {
       "name": "Design Justice Network ",
+      "url": "https://designjustice.org/",
+      "description": "is committed to rethinking design processes so that they center people who are often marginalized by design.",
+      "type": "org"
+    },
+    {
+      "name": "Diversify Tech",
       "url": "https://www.diversifytech.co/",
-      "description": "Diversify Tech collects scholarships, events, career opportunities and resources for underrepresented people in tech.",
+      "description": "collects scholarships, events, career opportunities and resources for underrepresented people in tech.",
       "type": "org"
     },
     {
       "name": "Hire More Women In Tech",
       "url": "https://www.hiremorewomenintech.com/",
-      "description": "Hire More Women In Tech helps you learn a few simple things you can do to find and hire more qualified women in tech.",
+      "description": "helps you learn a few simple things you can do to find and hire more qualified women in tech.",
       "type": "org"
     }
   ],
@@ -81,46 +129,203 @@
     {
       "name": "An Ethical Toolkit for Engineering/Design Practice",
       "url": "https://www.scu.edu/ethics-in-technology-practice/ethical-toolkit/",
-      "description": "An Ethical Toolkit for Engineering/Design Practice by the Markkula Center for Applied Ethics ",
+      "description": "a toolkit by the Markkula Center for Applied Ethics ",
       "type": "tool"
     },
     {
-      "name": "Ghost Work: How to Stop Silicon Valley from Building a New Global Underclass",
-      "url": "https://ghostwork.info/",
-      "description": "TODO",
-      "type": "book"
+      "name": "A Framework for More Ethical Innovation by Substantial",
+      "url": "https://substantial.com/insights/ethical-innovation-framework",
+      "type": "tool"
+    },
+    {
+      "name": "Consequence Scanning Agile Kit",
+      "url": "https://www.tech-transformed.com/product-development/",
+      "type": "tool"
+    },
+    {
+      "name": "Data Ethics Canvas by Open Data Institute",
+      "url": "https://theodi.org/article/the-data-ethics-canvas-2021/",
+      "type": "tool"
+    },
+    {
+      "name": "Envisioning Cards",
+      "url": "http://www.envisioningcards.com",
+      "type": "tool"
+    },
+    {
+      "name": "Ethical Licenses for Open Source Software",
+      "url": "https://ethicalsource.dev/licenses/",
+      "type": "tool"
+    },
+    {
+      "name": "Ethics for Designers",
+      "url": "https://www.ethicsfordesigners.com",
+      "type": "tool"
+    },
+    {
+      "name": "Privacy by Design",
+      "url": "https://iapp.org/media/pdf/resource_center/pbd_implement_7found_principles.pdf",
+      "type": "tool"
+    },
+    {
+      "name": "Responsible tech playbook by Thoughtworks",
+      "url": "https://www.thoughtworks.com/about-us/social-change/responsible-tech-playbook",
+      "type": "tool"
+    },
+    {
+      "name": "Spotify's Ethics Assessment Worksheet",
+      "url": "https://spoti.fi/Ethicsassessment",
+      "type": "tool"
+    },
+    {
+      "name": "Values in Computing",
+      "url": "http://www.valuesincomputing.org",
+      "type": "website"
     },
     {
       "name": "Tethix Directory of Ethics Tools and Techniques",
       "url": "https://tethix.co/ethics-tools-directory/",
-      "description": "TODO",
       "type": "website"
+    },
+    {
+      "name": "The Ethics and Inclusion Framework",
+      "url": "https://patriciagestoso.com/ethics-and-inclusion-framework/",
+      "type": "tool"
+    },
+    {
+      "name": "Value Sensitive Design Research Lab",
+      "url": "https://vsdesign.org/toolkits/",
+      "type": "website"
+    },
+    {
+      "name": "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence",
+      "url": "https://katecrawford.net/",
+      "type": "book"
+    },
+    {
+      "name": "Ghost Work: How to Stop Silicon Valley from Building a New Global Underclass",
+      "url": "https://ghostwork.info/",
+      "type": "book"
+    },
+    {
+      "name": "Ruined by Design: A design ethics and activism book",
+      "url": "https://www.ruinedby.design",
+      "type": "book"
+    },
+    {
+      "name": "All Tech Is Human",
+      "url": "https://alltechishuman.org/",
+      "description": "is a non-profit focused on building the responsible tech pipeline.",
+      "type": "org"
+    },
+    {
+      "name": "Ethical Design Network",
+      "url": "https://ethicaldesignnetwork.com/",
+      "description": "is a community for people interested in ethical design.",
+      "type": "org"
     }
   ], 
   "sustainability": [
     {
       "name": "B Impact Assessment",
       "url": "https://bimpactassessment.net/",
-      "description": "B Impact Assessment is a tool a company can use to measure its impact on its workers, community, environment, and customers.",
+      "description": "is a tool a company can use to measure its impact on its workers, community, environment, and customers.",
       "type": "tool"
+    },
+    {
+      "name": "ClimateAction.Tech guide: Reduce the carbon emissions of your website",
+      "url": "https://climateaction.tech/actions/reduce-the-carbon-emissions-of-your-website/",
+      "type": "website"
+    },
+    {
+      "name": "Climate Justice 101 Guide",
+      "url": "https://www.notion.so/Climate-Justice-101-Guide-03bef96c18364c6cbca481ead365ae9e",
+      "type": "website"
+    },
+    {
+      "name": "Cloud Carbon Emissions Measurement and Analysis Tool",
+      "url": "https://www.cloudcarbonfootprint.org/",
+      "type": "website"
+    },
+    {
+      "name": "Planet Centric Design",
+      "url": "https://planetcentricdesign.com/",
+      "type": "tool"
+    },
+    {
+      "name": "Principles of Green Software Engineering",
+      "url": "https://principles.green/",
+      "type": "website"
+    },
+    {
+      "name": "Sustainable Design Tools",
+      "url": "https://www.sdfy.org/sustainable-design-tools",
+      "type": "tools"
+    },
+    {
+      "name": "Sustainable Web Design",
+      "url": "https://sustainablewebdesign.org/",
+      "type": "tools"
+    },
+    {
+      "name": "Tools for Sustainable Innovation by Threebility",
+      "url": "https://www.threebility.com/tools",
+      "type": "tools"
+    },
+    {
+      "name": "Website Carbon Calculator",
+      "url": "https://www.websitecarbon.com/",
+      "type": "tools"
     },
     {
       "name": "Sustainable Virtual Design",
       "url": "https://sustainablevirtualdesign.wordpress.com/",
-      "description": "TODO",
       "type": "website"
+    },
+    {
+      "name": "SustainableBusinessModel.org",
+      "url": "https://sustainablebusinessmodel.org/",
+      "description": "presents academic research on business models for sustainability.",
+      "type": "website"
+    },
+    {
+      "name": "Design Is the Problem: The Future of Design Must be Sustainable",
+      "url": "https://rosenfeldmedia.com/books/design-is-the-problem/",
+      "type": "book"
+    },
+    {
+      "name": "Designing for Sustainability",
+      "url": "https://www.oreilly.com/library/view/designing-for-sustainability/9781491935767/",
+      "type": "book"
     },
     {
       "name": "World Wide Waste",
       "url": "https://gerrymcgovern.com/books/world-wide-waste/",
-      "description": "TODO",
       "type": "book"
     },
     {
       "name": "ClimateAction.tech",
       "url": "https://climateaction.tech/",
-      "description": "ClimateAction.tech is a worldwide community connecting tech workers that want to learn more about climate action, discover climate jobs and more.",
+      "description": "is a worldwide community connecting tech workers that want to learn more about climate action, discover climate jobs and more.",
       "type": "org"
+    },
+    {
+      "name": "The Green Web Foundation",
+      "url": "https://www.thegreenwebfoundation.org/",
+      "description": "offers a directory of green hosting providers and other useful green hosting tools.",
+      "type": "org"
+    },
+    {
+      "name": "Work on Climate",
+      "url": "https://workonclimate.org",
+      "description": "is an action-oriented Slack community for people serious about climate work.",
+      "type": "org"
+    },
+    {
+      "name": "SustainableUX",
+      "url": "https://sustainableux.com/",
+      "description": "is an online free conference for UX, front-end, and product people interested in sustainability.",
+      "type": "event"
     }
   ]
 }
