@@ -4,7 +4,8 @@ const rows = require('./rows.json');
 
 // Map properties, don't forget to change if map changes!
 const mapFile = "../RespTechLibrary/library.json";
-const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json";  // Change this when adding new functionality
+// Hint: use a test map first when making big changes to avoid corrupting the main mapFile
+const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json";
 const outputObjectLayer = 'resourcesAreas';
 const outputTileLayer = 'resourcesTiles';
 
@@ -15,16 +16,16 @@ const mapHeight = 40;
 
 const tileSize = 32;
 
-// Row properties that we want to fill 
+// Define row properties that we want to fill 
 const areaWidth = 3;
 const areaHeight = 1;
 
 const tablesRow = 5;
 
-// List of categories to populate; use same name in resources and rows files
+// List of categories to populate; the same name is used in resources and rows files
 const categories = ["accessibility", "bias", "diversity", "ethics", "sustainability"];
 
-// Initializing blank tile data array
+// Initialize a blank tile layer data array
 var tileLayerData = [];
 for (var tile = 0; tile < (mapHeight * mapWidth); tile++) {
     tileLayerData.push(0);
@@ -32,8 +33,11 @@ for (var tile = 0; tile < (mapHeight * mapWidth); tile++) {
 
 var tileIndex = 0;
 
-// Figure out tile gids by looking at a tileResources layer
-// Not sure elegant but does the job for now
+// Figure out resource tile gids by looking at a tileResources layer.
+// A more elegant way might be to look at tilesets object in the map 
+// and the firstgid property of each tileset, but the tiles have to 
+// be added to the map anyway, and this way you don't have to worry
+// about which tilesets each tile belongs to.
 let tileTool = 0;
 let tileBook = 0;
 let tileWebsite = 0;
@@ -51,21 +55,20 @@ for (let i = 0; i < mapData["layers"].length; i++) {
         break;
     }    
 }
+// Just some debugging statements
 console.log("Found resource tiles! Their IDs: ");
 console.log(tileTool, tileBook, tileWebsite, tileOther);
 
-// Initializing blank objects array, used to store object areas with URLs
+// Initialize an empty objects array, which is used to store object areas with URLs
 var objectLayersObjects = [];
 let areaNew = {};
 
-// Initializing variables
+// Initialize some variables
 var currentRow = 0;
 var rowStarts = [];
 
 var areaX = 0;
 var areaY = 0;
-var nextX = 0;
-var nextY = 0;
 var areaID = 100;
 
 const rowWidth = tablesRow * areaWidth;
@@ -86,6 +89,7 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         var resourceUrl = resources[category][i].url;
         var resourceType = resources[category][i].type;
 
+        // Define trigger message that appears as players walk on each website object area
         var triggerMessage = " ______________________________  Press SPACE to view website";
         if (resourceDesc) {
             triggerMessage = resourceName + ": " + resourceDesc + triggerMessage;
@@ -94,8 +98,9 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         }
 
         // console.log('Processing resource: ' + resourceName);
-    
-        // Area y coordinates are different depending on area type
+        
+        // Calculate coordinates of each website object area and add to the objects layer
+        // Note that area y coordinates are different depending on area type ("below" | "above")
         areaX = nextX * tileSize;
         if (rowStarts[currentRow].type === "below") {
             areaY = (nextY + 1) * tileSize;
@@ -138,7 +143,8 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             "y": areaY
         };
         objectLayersObjects.push(areaNew);
-    
+        
+        // Add the resource tile gid to the right square in the map
         tileIndex = nextY * mapWidth + nextX + 1;
         if (resourceType === 'tool') {
             tileLayerData[tileIndex] = tileTool;
@@ -150,7 +156,7 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             tileLayerData[tileIndex] = tileOther;
         }
     
-        // Check if we have space in the current row
+        // Check if we have space in the current row or move to the next row (if it exists)
         if ((nextX + areaWidth) < (rowStarts[currentRow].x + rowWidth)) {
             nextX += areaWidth;
         } else if ((currentRow + 1) < rowStarts.length) {
@@ -193,7 +199,7 @@ require('fs').writeFile(outputMapFile, JSON.stringify(mapData), (error) => {
     }
 });
 
-// Leaving these here for debugging purposes
+// Also write layer data to output folder, purely for debugging purposes
 require('fs').writeFile('./output/objectLayer.json', JSON.stringify(objectLayersObjects), (error) => {
     if (error) {
         throw error;
