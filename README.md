@@ -1,6 +1,8 @@
 # About this script
 
-This simple script was written to auto-populate resource layers in the Responsible Tech Library map used in [WorkAdventure](https://workadventu.re/). The map was built in [Tiled map editor](https://www.mapeditor.org/).
+This simple script was written to auto-populate resource layers in the [Responsible Tech Library map](https://github.com/ResponsibleTechWork/RespTechLibrary) used in [WorkAdventure](https://workadventu.re/). The map was built in [Tiled map editor](https://www.mapeditor.org/).
+
+You can visit the Library at: https://play.workadventu.re/@/responsibletech.work/rtw/library
 
 ## What the script does
 
