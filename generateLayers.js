@@ -5,7 +5,7 @@ const rows = require('./rows.json');
 // Map properties, don't forget to change if map changes!
 const mapFile = "../RespTechLibrary/library.json";
 // Hint: use a test map first when making big changes to avoid corrupting the main mapFile
-const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json";
+const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json"; 
 const outputObjectLayer = 'resourcesAreas';
 const outputTileLayer = 'resourcesTiles';
 
@@ -41,7 +41,12 @@ var tileIndex = 0;
 let tileTool = 0;
 let tileBook = 0;
 let tileWebsite = 0;
+let tileOrg = 0;
 let tileOther = 0;
+
+// Same for tiles with carpets that are drawn below or above resource tables 
+let tileCarpetBelow = 0;
+let tileCarpetAbove = 0;
 
 for (let i = 0; i < mapData["layers"].length; i++) {
     var layerName = mapData["layers"][i].name;
@@ -51,7 +56,10 @@ for (let i = 0; i < mapData["layers"].length; i++) {
         tileTool = layerTiles[0];
         tileBook = layerTiles[1];
         tileWebsite = layerTiles[2];
-        tileOther = layerTiles[3];
+        tileOrg = layerTiles[3];
+        tileOther = layerTiles[4];
+        tileCarpetBelow = layerTiles[mapWidth+1];
+        tileCarpetAbove = layerTiles[mapWidth+1+areaWidth];
         break;
     }    
 }
@@ -84,6 +92,7 @@ for (let i = 0; i < categories.length; i++) {
 
 function populateCategory(category, rowStarts, nextX, nextY) {
     for (let i = 0; i < resources[category].length; i++) {
+        var rowType = rowStarts[currentRow].type;
         var resourceName = resources[category][i].name;
         var resourceDesc = resources[category][i].description;
         var resourceUrl = resources[category][i].url;
@@ -102,9 +111,9 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         // Calculate coordinates of each website object area and add to the objects layer
         // Note that area y coordinates are different depending on area type ("below" | "above")
         areaX = nextX * tileSize;
-        if (rowStarts[currentRow].type === "below") {
+        if (rowType === "below") {
             areaY = (nextY + 1) * tileSize;
-        } else if (rowStarts[currentRow].type === "above") {
+        } else if (rowType === "above") {
             areaY = (nextY - areaHeight) * tileSize;
         }
         areaNew = {
@@ -152,9 +161,24 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             tileLayerData[tileIndex] = tileWebsite;
         } else if (resourceType === 'book') {
             tileLayerData[tileIndex] = tileBook;
+        } else if (resourceType === 'org') {
+            tileLayerData[tileIndex] = tileOrg;
         } else {
             tileLayerData[tileIndex] = tileOther;
         }
+
+        // Add carpet tile gid in the row below or above the resource tile 
+        if (rowType === "below") {
+            tileLayerData[tileIndex+mapWidth] = tileCarpetBelow;
+            tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow - 1;
+            tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow + 1;
+        } else if (rowType === "above") {
+            areaY = (nextY - areaHeight) * tileSize;
+            tileLayerData[tileIndex-mapWidth] = tileCarpetAbove;
+            tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove - 1;
+            tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove + 1;
+        }
+        
     
         // Check if we have space in the current row or move to the next row (if it exists)
         if ((nextX + areaWidth) < (rowStarts[currentRow].x + rowWidth)) {
