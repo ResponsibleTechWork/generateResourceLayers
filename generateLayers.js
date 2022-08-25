@@ -5,7 +5,7 @@ const rows = require('./rows.json');
 // Map properties, don't forget to change if map changes!
 const mapFile = "../RespTechLibrary/library.json";
 // Hint: use a test map first when making big changes to avoid corrupting the main mapFile
-const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json"; 
+const outputMapFile = "../RespTechLibrary/libraryTEST.json"; // mapFile; // 
 const outputObjectLayer = 'resourcesAreas';
 const outputTileLayer = 'resourcesTiles';
 
@@ -38,11 +38,9 @@ var tileIndex = 0;
 // and the firstgid property of each tileset, but the tiles have to 
 // be added to the map anyway, and this way you don't have to worry
 // about which tilesets each tile belongs to.
-let tileTool = 0;
-let tileBook = 0;
-let tileWebsite = 0;
-let tileOrg = 0;
-let tileOther = 0;
+let resourceTileBelow = {}
+let resourceTileAbove = {}
+const resourceTypes = ["tool", "book", "website", "org", "other"]
 
 // Same for tiles with carpets that are drawn below or above resource tables 
 let tileCarpetBelow = 0;
@@ -53,19 +51,24 @@ for (let i = 0; i < mapData["layers"].length; i++) {
     
     if (layerName === "tileResources") {
         var layerTiles = mapData["layers"][i].data;
-        tileTool = layerTiles[0];
-        tileBook = layerTiles[1];
-        tileWebsite = layerTiles[2];
-        tileOrg = layerTiles[3];
-        tileOther = layerTiles[4];
-        tileCarpetBelow = layerTiles[mapWidth+1];
-        tileCarpetAbove = layerTiles[mapWidth+1+areaWidth];
+        for (let i = 0; i < resourceTypes.length; i++) {
+            resourceTileBelow[resourceTypes[i]] = layerTiles[i];
+            resourceTileAbove[resourceTypes[i]] = layerTiles[mapWidth+i];
+        }
+        tileCarpetBelow = layerTiles[(2*mapWidth)+1];
+        tileCarpetAbove = layerTiles[(2*mapWidth)+1+areaWidth];
         break;
     }    
 }
 // Just some debugging statements
-console.log("Found resource tiles! Their IDs: ");
-console.log(tileTool, tileBook, tileWebsite, tileOther);
+console.log("Below row tile gids:");
+console.log(resourceTileBelow);
+console.log("Above row tile gids:");
+console.log(resourceTileAbove);
+console.log("And carpet tiles: " 
+            + tileCarpetBelow + " (below) and " 
+            + tileCarpetAbove + " (above)");
+console.log("===")
 
 // Initialize an empty objects array, which is used to store object areas with URLs
 var objectLayersObjects = [];
@@ -85,6 +88,7 @@ const rowWidth = tablesRow * areaWidth;
 for (let i = 0; i < categories.length; i++) {
     var category = categories[i];
     rowStarts = rows[category];
+    currentRow = 0;
     var firstX = rowStarts[0].x;
     var firstY = rowStarts[0].y;
     populateCategory(category, rowStarts, firstX, firstY);
@@ -98,6 +102,13 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         var resourceUrl = resources[category][i].url;
         var resourceType = resources[category][i].type;
 
+        if (!resourceTypes.includes(resourceType)) {
+            console.log("! FYI: " + resourceName + " has a new resource type: " + resourceType);
+            resourceType = "other";
+        }
+
+        // console.log('Processing resource: ' + resourceName);
+
         // Define trigger message that appears as players walk on each website object area
         var triggerMessage = " ______________________________  Press SPACE to view website";
         if (resourceDesc) {
@@ -106,8 +117,26 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             triggerMessage = resourceName + triggerMessage;
         }
 
-        // console.log('Processing resource: ' + resourceName);
+        // CHANGE TILE LAYER FOR EACH RESOURCE BASED ON ROW TYPE
+
+        // Add the resource tile gid to the right square in the map
+        tileIndex = nextY * mapWidth + nextX + 1;
+
+        // Add resource tile based on resource type and carpet tile gid 
+        // based on whether the row is type above or below 
+        if (rowType === "below") {
+            tileLayerData[tileIndex] = resourceTileBelow[resourceType];
+            tileLayerData[tileIndex+mapWidth] = tileCarpetBelow;
+            tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow - 1;
+            tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow + 1;
+        } else if (rowType === "above") {
+            tileLayerData[tileIndex] = resourceTileAbove[resourceType];
+            tileLayerData[tileIndex-mapWidth] = tileCarpetAbove;
+            tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove - 1;
+            tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove + 1;
+        }        
         
+        // ADD NEW OBJECT TO THE OBJECT LAYER
         // Calculate coordinates of each website object area and add to the objects layer
         // Note that area y coordinates are different depending on area type ("below" | "above")
         areaX = nextX * tileSize;
@@ -152,33 +181,6 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             "y": areaY
         };
         objectLayersObjects.push(areaNew);
-        
-        // Add the resource tile gid to the right square in the map
-        tileIndex = nextY * mapWidth + nextX + 1;
-        if (resourceType === 'tool') {
-            tileLayerData[tileIndex] = tileTool;
-        } else if (resourceType === 'website') {
-            tileLayerData[tileIndex] = tileWebsite;
-        } else if (resourceType === 'book') {
-            tileLayerData[tileIndex] = tileBook;
-        } else if (resourceType === 'org') {
-            tileLayerData[tileIndex] = tileOrg;
-        } else {
-            tileLayerData[tileIndex] = tileOther;
-        }
-
-        // Add carpet tile gid in the row below or above the resource tile 
-        if (rowType === "below") {
-            tileLayerData[tileIndex+mapWidth] = tileCarpetBelow;
-            tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow - 1;
-            tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow + 1;
-        } else if (rowType === "above") {
-            areaY = (nextY - areaHeight) * tileSize;
-            tileLayerData[tileIndex-mapWidth] = tileCarpetAbove;
-            tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove - 1;
-            tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove + 1;
-        }
-        
     
         // Check if we have space in the current row or move to the next row (if it exists)
         if ((nextX + areaWidth) < (rowStarts[currentRow].x + rowWidth)) {
@@ -189,18 +191,16 @@ function populateCategory(category, rowStarts, nextX, nextY) {
             nextY = rowStarts[currentRow].y;
         } else {
             if (resources[category][i+1]) {
-                console.log('Ran out of available spots in row with index ' + currentRow);
-                console.log('Resource "' + resources[category][i+1].name + '" and following not added.');
+                console.log('! Ran out of available spots in row with index ' + currentRow);
+                console.log('! Resource "' + resources[category][i+1].name + '" and following not added.');
             }
             break;
         }
-        
     }
-    currentRow = 0;
     console.log("Populated " + resources[category].length + " resources in category " + category);
 }
 
-
+console.log("===");
 
 // Update original map data 
 for (let i = 0; i < mapData["layers"].length; i++) {
