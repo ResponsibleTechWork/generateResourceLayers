@@ -19,6 +19,7 @@ const tileSize = 32;
 // Define row properties that we want to fill 
 const areaWidth = 3;
 const areaHeight = 1;
+const areaEdgeMargin = 4;
 
 const tablesRow = 5;
 
@@ -111,6 +112,7 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         var resourceUrl = resources[category][i].url;
         var resourceType = resources[category][i].type;
         var resourceNeed = resources[category][i].need;
+        var resourceIframe = resources[category][i].iframe;
 
         // Display warning & set type/need to "other" to catch typos or unsupported types/needs
         if (!resourceTypes.includes(resourceType)) {
@@ -125,7 +127,11 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         // console.log('Processing resource: ' + resourceName);
 
         // Define trigger message that appears as players walk on each website object area
-        var triggerMessage = " ______________________________  Press SPACE to view website";
+        var triggerPrompt = "👓 Press SPACE to view website";
+        if (!resourceIframe) {
+            triggerPrompt = "🚪 Press SPACE to open link in new tab"
+        }
+        var triggerMessage = " ____________________________ " + triggerPrompt;
         if (resourceDesc) {
             triggerMessage = resourceName + ": " + resourceDesc + triggerMessage;
         } else {
@@ -167,20 +173,25 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         // ADD NEW OBJECT TO THE OBJECT LAYER
         // Calculate coordinates of each website object area and add to the objects layer
         // Note that area y coordinates are different depending on area type ("below" | "above")
-        areaX = nextX * tileSize;
+        areaX = (nextX * tileSize) + areaEdgeMargin;
         if (rowType === "below") {
             areaY = (nextY + 1) * tileSize;
         } else if (rowType === "above") {
-            areaY = (nextY - areaHeight) * tileSize;
+            areaY = ((nextY - areaHeight) * tileSize) + areaEdgeMargin;
         }
+        var urlOpenType = "openWebsite";
+        if (!resourceIframe) {
+            urlOpenType = "openTab";
+        }
+        // Width & height are smaller due to margins on left, right and bottom/top
         areaNew = {
-            "width": areaWidth * tileSize,
-            "height": areaHeight * tileSize,
+            "width": (areaWidth * tileSize) - (2 * areaEdgeMargin),
+            "height": (areaHeight * tileSize) - areaEdgeMargin,
             "id":areaID,
             "name":resourceName,
             "properties":[
                     {
-                    "name":"openWebsite",
+                    "name":urlOpenType,
                     "type":"string",
                     "value":resourceUrl
                     },

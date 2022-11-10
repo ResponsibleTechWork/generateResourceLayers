@@ -131,117 +131,136 @@
       "url": "https://www.scu.edu/ethics-in-technology-practice/ethical-toolkit/",
       "description": "a toolkit by the Markkula Center for Applied Ethics ",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": false
     },
     {
       "name": "A Framework for More Ethical Innovation by Substantial",
       "url": "https://substantial.com/insights/ethical-innovation-framework",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Consequence Scanning Agile Kit",
       "url": "https://www.tech-transformed.com/product-development/",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Data Ethics Canvas by Open Data Institute",
       "url": "https://theodi.org/article/the-data-ethics-canvas-2021/",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Envisioning Cards",
       "url": "http://www.envisioningcards.com",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": false
     },
     {
       "name": "Ethical Licenses for Open Source Software",
       "url": "https://ethicalsource.dev/licenses/",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Ethics for Designers",
       "url": "https://www.ethicsfordesigners.com",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Privacy by Design",
       "url": "https://iapp.org/media/pdf/resource_center/pbd_implement_7found_principles.pdf",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": false
     },
     {
       "name": "Responsible tech playbook by Thoughtworks",
       "url": "https://www.thoughtworks.com/about-us/social-change/responsible-tech-playbook",
       "type": "tool",
-      "need": "observation"
+      "need": "observation",
+      "iframe": false
     },
     {
       "name": "Spotify's Ethics Assessment Worksheet",
       "url": "https://spoti.fi/Ethicsassessment",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Values in Computing",
       "url": "http://www.valuesincomputing.org",
       "type": "website",
-      "need": "observation"
+      "need": "observation",
+      "iframe": false
     },
     {
       "name": "Tethix Directory of Ethics Tools and Techniques",
       "url": "https://tethix.co/ethics-tools-directory/",
       "type": "website",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "The Ethics and Inclusion Framework",
       "url": "https://patriciagestoso.com/ethics-and-inclusion-framework/",
       "type": "tool",
-      "need": "practice"
+      "need": "practice",
+      "iframe": true
     },
     {
       "name": "Value Sensitive Design Research Lab",
       "url": "https://vsdesign.org/toolkits/",
       "type": "website",
-      "need": "observation"
+      "need": "observation",
+      "iframe": false
     },
     {
       "name": "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence",
       "url": "https://katecrawford.net/",
       "type": "book",
-      "need": "challenge"
+      "need": "challenge",
+      "iframe": true
     },
     {
       "name": "Ghost Work: How to Stop Silicon Valley from Building a New Global Underclass",
       "url": "https://ghostwork.info/",
       "type": "book",
-      "need": "challenge"
+      "need": "challenge",
+      "iframe": true
     },
     {
       "name": "Ruined by Design: A design ethics and activism book",
       "url": "https://www.ruinedby.design",
       "type": "book",
-      "need": "challenge"
+      "need": "challenge",
+      "iframe": true
     },
     {
       "name": "All Tech Is Human",
       "url": "https://alltechishuman.org/",
       "description": "is a non-profit focused on building the responsible tech pipeline.",
       "type": "org",
-      "need": "community"
+      "need": "community",
+      "iframe": true
     },
     {
       "name": "Ethical Design Network",
       "url": "https://ethicaldesignnetwork.com/",
       "description": "is a community for people interested in ethical design.",
       "type": "org",
-      "need": "community"
+      "need": "community",
+      "iframe": true
     }
   ], 
   "sustainability": [
