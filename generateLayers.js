@@ -5,7 +5,7 @@ const rows = require('./rows.json');
 // Map properties, don't forget to change if map changes!
 const mapFile = "../RespTechLibrary/library.json";
 // Hint: use a test map first when making big changes to avoid corrupting the main mapFile
-const outputMapFile = "../RespTechLibrary/libraryTEST.json"; // mapFile; // 
+const outputMapFile = mapFile; // "../RespTechLibrary/libraryTEST.json"; 
 const outputObjectLayer = 'resourcesAreas';
 const outputTileLayer = 'resourcesTiles';
 
