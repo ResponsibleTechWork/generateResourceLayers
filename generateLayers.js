@@ -38,25 +38,33 @@ var tileIndex = 0;
 // and the firstgid property of each tileset, but the tiles have to 
 // be added to the map anyway, and this way you don't have to worry
 // about which tilesets each tile belongs to.
-let resourceTileBelow = {}
-let resourceTileAbove = {}
-const resourceTypes = ["tool", "book", "website", "org", "other"]
+let resourceTileBelow = {};
+let resourceTileAbove = {};
+const resourceTypes = ["tool", "book", "website", "org", "other"];
 
 // Same for tiles with carpets that are drawn below or above resource tables 
-let tileCarpetBelow = 0;
-let tileCarpetAbove = 0;
+let tileCarpetBelow = {};
+let tileCarpetAbove = {};
+const carpetNeeds = ["practice", "challenge", "observation", "community", "other"];
 
 for (let i = 0; i < mapData["layers"].length; i++) {
     var layerName = mapData["layers"][i].name;
     
     if (layerName === "tileResources") {
         var layerTiles = mapData["layers"][i].data;
+        // Resource tiles are in row 1 and row 2 of the tileResources layer
         for (let i = 0; i < resourceTypes.length; i++) {
             resourceTileBelow[resourceTypes[i]] = layerTiles[i];
-            resourceTileAbove[resourceTypes[i]] = layerTiles[mapWidth+i];
+            resourceTileAbove[resourceTypes[i]] = layerTiles[mapWidth+i]; 
         }
-        tileCarpetBelow = layerTiles[(2*mapWidth)+1];
-        tileCarpetAbove = layerTiles[(2*mapWidth)+1+areaWidth];
+        // Carpet tiles are in row 3 and 4 of the tileResources layer 
+        // and we're using mapWidth to calculate the tile index.
+        // For each 3-tile carpet we're saving just the gid of the middle tile, 
+        // so we're adding 1 in addition to carpet areaWidth (=3)
+        for (let i = 0; i < carpetNeeds.length; i++) {
+            tileCarpetBelow[carpetNeeds[i]] = layerTiles[(2*mapWidth)+(i*areaWidth)+1];
+            tileCarpetAbove[carpetNeeds[i]] = layerTiles[(3*mapWidth)+(i*areaWidth)+1];
+        }
         break;
     }    
 }
@@ -65,9 +73,10 @@ console.log("Below row tile gids:");
 console.log(resourceTileBelow);
 console.log("Above row tile gids:");
 console.log(resourceTileAbove);
-console.log("And carpet tiles: " 
-            + tileCarpetBelow + " (below) and " 
-            + tileCarpetAbove + " (above)");
+console.log("Below carpet middle tile gids:");
+console.log(tileCarpetBelow);
+console.log("Below carpet middle tile gids:");
+console.log(tileCarpetAbove);
 console.log("===")
 
 // Initialize an empty objects array, which is used to store object areas with URLs
@@ -101,10 +110,16 @@ function populateCategory(category, rowStarts, nextX, nextY) {
         var resourceDesc = resources[category][i].description;
         var resourceUrl = resources[category][i].url;
         var resourceType = resources[category][i].type;
+        var resourceNeed = resources[category][i].need;
 
+        // Display warning & set type/need to "other" to catch typos or unsupported types/needs
         if (!resourceTypes.includes(resourceType)) {
             console.log("! FYI: " + resourceName + " has a new resource type: " + resourceType);
             resourceType = "other";
+        }
+        if (resourceNeed && !carpetNeeds.includes(resourceNeed)) {
+            console.log("! FYI: " + resourceName + " has an unknown need: " + resourceNeed);
+            resourceNeed = "other";
         }
 
         // console.log('Processing resource: ' + resourceName);
@@ -124,16 +139,29 @@ function populateCategory(category, rowStarts, nextX, nextY) {
 
         // Add resource tile based on resource type and carpet tile gid 
         // based on whether the row is type above or below 
+        // tileCarpetBelow and tileCarpetAbove store the middle tile gid
         if (rowType === "below") {
             tileLayerData[tileIndex] = resourceTileBelow[resourceType];
-            tileLayerData[tileIndex+mapWidth] = tileCarpetBelow;
-            tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow - 1;
-            tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow + 1;
+            if (resourceNeed) {
+                tileLayerData[tileIndex+mapWidth] = tileCarpetBelow[resourceNeed];
+                tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow[resourceNeed] - 1;
+                tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow[resourceNeed] + 1;
+            } else {
+                tileLayerData[tileIndex+mapWidth] = tileCarpetBelow["other"];
+                tileLayerData[tileIndex+mapWidth-1] = tileCarpetBelow["other"] - 1;
+                tileLayerData[tileIndex+mapWidth+1] = tileCarpetBelow["other"] + 1;
+            }
         } else if (rowType === "above") {
             tileLayerData[tileIndex] = resourceTileAbove[resourceType];
-            tileLayerData[tileIndex-mapWidth] = tileCarpetAbove;
-            tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove - 1;
-            tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove + 1;
+            if (resourceNeed) {
+                tileLayerData[tileIndex-mapWidth] = tileCarpetAbove[resourceNeed];
+                tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove[resourceNeed] - 1;
+                tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove[resourceNeed] + 1;
+            } else {
+                tileLayerData[tileIndex-mapWidth] = tileCarpetAbove["other"];
+                tileLayerData[tileIndex-mapWidth-1] = tileCarpetAbove["other"] - 1;
+                tileLayerData[tileIndex-mapWidth+1] = tileCarpetAbove["other"] + 1;
+            }
         }        
         
         // ADD NEW OBJECT TO THE OBJECT LAYER
